@@ -41,7 +41,25 @@ shortcodes:
 
     - project_id - [null] (numeric)
         - If a Betterplace project id is set the donations value will be taken 
-            from the Betterpace database via api and given id.
+            from the Betterplace database via api and given id.
+
+    - width - [null] (bool)
+        1. 1 - on, the animation will be in width and not height. The setting for height will be used for the width
+        2. 0 - off
+
+    - scale_box_class - [null] (string)
+        Class for the outer div for own css styles
+
+    - scale_content_class - [null] (string) 
+        Class for the inner div for own css styles
+
+    - image - [1] (bool)
+        1. 1 - shows images in scale divs
+        2. 0 - no images
+
+    - content - [1] (bool)
+        1. 1 - shows donation content in scale div
+        2. 0 - no content
 
 == Installation ==
 

@@ -22,11 +22,22 @@ div#counter-fill-wrap {
 	height: 0;
 }
 
+#counter.width div#counter-fill-wrap {
+    height: 100%;
+    width: 0%;
+}
+
 div#counter-fill-wrap img#counter-fill {
 	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 100%;
+}
+
+#counter.width img#counter-fill {
+    height: 100%;
+    width: unset;
+    max-width: unset;
 }
 
 div#counter-value-wrap {

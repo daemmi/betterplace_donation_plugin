@@ -6,6 +6,7 @@ better_dc = {
     min_val: {}, 
     cur_val: {},
     index: {},
+    width: {},
 }
 
 jQuery( function ( $ ) {
@@ -15,16 +16,29 @@ jQuery( function ( $ ) {
         better_dc.height[id] = window["counter_params" + id].height;
         better_dc.min_val[id] = window["counter_params" + id].min;
         better_dc.cur_val[id] = window["counter_params" + id].current; 
+        better_dc.width[id] = window["counter_params" + id].width; 
         better_dc.index[id] = index;
 
         setTimeout( function() {
             count_up( id, better_dc.min_val[id], better_dc.cur_val[id] );
-            $( '#' + id ).find( '#counter-fill-wrap.animated' )
-                    .animate( { height: better_dc.height[id] }, 5000 );
-        }, 975 );
+            if( better_dc.width[id] == 1 ) {
+                $( '#' + id ).find( '#counter-fill-wrap.animated' )
+                    .animate( { width: better_dc.height[id] }, 5000 ); 
+            } else {
+                $( '#' + id ).find( '#counter-fill-wrap.animated' )
+                    .animate( { height: better_dc.height[id] }, 5000 ); 
+            }
 
-        $( '#' + id ).find( '#counter-fill-wrap.simple' )
+        }, 975 );
+        
+        if( better_dc.width[id] == 1 ) {
+            $( '#' + id ).find( '#counter-fill-wrap.simple' )
+                .width( better_dc.height[id] ); 
+        } else {
+            $( '#' + id ).find( '#counter-fill-wrap.simple' )
                 .height( better_dc.height[id] ); 
+        }
+        
     } );
 
     function count_up( id, current_val, max_val ) {
