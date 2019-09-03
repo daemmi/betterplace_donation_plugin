@@ -36,6 +36,7 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
                 'scale_content_class' => null,
                 'image' => 1,
                 'content' => 1,
+                'only_numeric' => 0,
             ), $atts ) );
 
             if( $project_id != null ) {
@@ -87,37 +88,41 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
             wp_enqueue_script( 'better-dc-counter' );
             wp_localize_script( 'better-dc-counter', 'counter_params' . $id, $counter_params );
             
-            $output =   '<div class="counter-wrap" id="' . $id . '">' . 
-                            '<div id="counter" class="' . $scale_box_class . ' ';
-                            if ( 1 == $animation ) {
-                                    $output .= 'animated ';
-                            }
-                            if ( 1 == $width ) {
-                                    $output .= 'width ';
-                            }
-                            $output .= '">';
-                                if ( 1 == $image ) {
-                                    $output .=  '<img id="counter-bg" alt="Donation Counter" src="' . BETTER_DC_RELPATH . 'img/counter-bg.png" />';
-                                }
-                                $output .= '<div id="counter-fill-wrap"';
+            if( $only_numeric == 0 ) { 
+                $output =   '<div class="counter-wrap" id="' . $id . '">' . 
+                                '<div id="counter" class="' . $scale_box_class . ' ';
                                 if ( 1 == $animation ) {
-                                    $output .= ' class="animated ';
-                                } else {
-                                    $output .= ' class="simple ';
+                                        $output .= 'animated ';
                                 }
-                                $output .= $scale_content_class . '">';
-                                if ( 1 == $image ) {
-                                    $output .= '<img id="counter-fill" alt="Donation Counter" src="' . BETTER_DC_RELPATH . 'img/counter-fill.png" />';
+                                if ( 1 == $width ) {
+                                        $output .= 'width ';
                                 }
-                                $output .= '</div>';
-                                if ( 1 == $content ) {
-                                $output .= '<div id="counter-value-wrap">' .
-                                                '<span id="counter-value">' . $min . '</span>' .
-                                                '<br /><span class="counter-money">' . _x( 'Euros', 'Donation Counter', 'better-dc' ) . '</span>' .
-                                            '</div>';
-                                }
-                            $output .= '</div>' .
-                        '</div>';
+                                $output .= '">';
+                                    if ( 1 == $image ) {
+                                        $output .=  '<img id="counter-bg" alt="Donation Counter" src="' . BETTER_DC_RELPATH . 'img/counter-bg.png" />';
+                                    }
+                                    $output .= '<div id="counter-fill-wrap"';
+                                    if ( 1 == $animation ) {
+                                        $output .= ' class="animated ';
+                                    } else {
+                                        $output .= ' class="simple ';
+                                    }
+                                    $output .= $scale_content_class . '">';
+                                    if ( 1 == $image ) {
+                                        $output .= '<img id="counter-fill" alt="Donation Counter" src="' . BETTER_DC_RELPATH . 'img/counter-fill.png" />';
+                                    }
+                                    $output .= '</div>';
+                                    if ( 1 == $content ) {
+                                        $output .= '<div id="counter-value-wrap">' .
+                                                        '<span class="counter-value">' . $min . '</span>' .
+                                                        '<br /><span class="counter-money">' . _x( 'Euros', 'Donation Counter', 'better-dc' ) . '</span>' .
+                                                    '</div>';
+                                    }
+                                $output .= '</div>' .
+                            '</div>';
+            } else {
+                $output =   '<div class="counter-wrap" id="' . $id . '"> <span class="counter-value">' . $min . '</span> </div>';
+            }
 
             return $output;
        }  

@@ -61,6 +61,10 @@ shortcodes:
         1. 1 - shows donation content in scale div
         2. 0 - no content
 
+    - only_numeric - [0] (bool)
+        1. 1 - shows only the donation amount and counts up
+        2. 0 - normal animation
+
 == Installation ==
 
 This section describes how to install and use the plugin.
