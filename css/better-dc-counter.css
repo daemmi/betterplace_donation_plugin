@@ -1,0 +1,69 @@
+div.counter-wrap {
+	position: relative;
+	width: 100%;
+}
+
+div#counter {
+	position: relative;
+	width: 100%;
+	max-width: 252px;
+	max-height: 266px;
+	top: 0;
+	left: 0;
+}
+
+div#counter-fill-wrap {
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	max-width: 252px;
+	height: 0;
+}
+
+div#counter-fill-wrap img#counter-fill {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+div#counter-value-wrap {
+	position: absolute;
+	top: 65%;
+	left: 40%;
+	width: 14em;
+	height: 7em;
+	max-width: 100%;
+	margin-left: -7em;
+	margin-top: -3.5em;
+	text-align: center;
+}
+
+div#counter-value-wrap span {
+	margin: 0;
+	padding: 0;
+	font-size: 1.8em;
+	line-height: 1;
+	color: #000000;
+}
+
+div#counter-value-wrap span#counter-value {
+	margin: 0;
+	padding: 0;
+	font-size: 4em;
+	font-family: 'Raleway';
+}
+
+div#counter-value-wrap span.counter-euros {
+	font-size: 1.2em;
+	margin: 0 0 .2em;
+	font-family: 'Raleway';
+	text-transform: uppercase;
+}
+
+div.counter-wrap img {
+	padding: 0;
+	margin: 0;
+}
