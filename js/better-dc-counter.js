@@ -1,7 +1,7 @@
-var better_dc = better_dc || {};
+var better_dc_counter = better_dc_counter || {};
 
 // global variables
-better_dc = {
+better_dc_counter = {
     height: {}, 
     min_val: {}, 
     cur_val: {},
@@ -9,7 +9,7 @@ better_dc = {
     width: {},
     runed: {},
     only_numeric: {},
-}
+};
 
 jQuery( function ( $ ) {
     
@@ -17,21 +17,21 @@ jQuery( function ( $ ) {
     $( '.counter-wrap' ).each( function ( index ) {
         //get the variables from each element
         var id = $( this ).attr('id');
-        better_dc.height[id] = window["counter_params" + id].height;
-        better_dc.min_val[id] = window["counter_params" + id].min;
-        better_dc.cur_val[id] = window["counter_params" + id].current; 
-        better_dc.width[id] = window["counter_params" + id].width; 
-        better_dc.only_numeric[id] = window["counter_params" + id].only_numeric; 
-        better_dc.index[id] = index; 
-        better_dc.runed[id] = 0;
+        better_dc_counter.height[id]        = window["counter_params" + id].height;
+        better_dc_counter.min_val[id]       = window["counter_params" + id].min;
+        better_dc_counter.cur_val[id]       = window["counter_params" + id].current; 
+        better_dc_counter.width[id]         = window["counter_params" + id].width; 
+        better_dc_counter.only_numeric[id]  = window["counter_params" + id].only_numeric; 
+        better_dc_counter.index[id]         = index; 
+        better_dc_counter.runed[id]         = 0;
         
         //fill the elements if animation is off
-        if( better_dc.width[id] == 1 ) {
+        if( better_dc_counter.width[id] == 1 ) {
             $( '#' + id ).find( '#counter-fill-wrap.simple' )
-                .width( better_dc.height[id] ); 
+                .width( better_dc_counter.height[id] ); 
         } else {
             $( '#' + id ).find( '#counter-fill-wrap.simple' )
-                .height( better_dc.height[id] ); 
+                .height( better_dc_counter.height[id] ); 
         }
         
         //check if elemt is in viewport
@@ -53,18 +53,17 @@ jQuery( function ( $ ) {
         
         //animation function
         function run( id ) {
-            if( better_dc.runed[id] == 0 ) {
-                console.log('FIRE' + id);
-                better_dc.runed[id] = 1;
+            if( better_dc_counter.runed[id] == 0 ) {
+                better_dc_counter.runed[id] = 1;
                 
-                    count_up( id, better_dc.min_val[id], better_dc.cur_val[id] );
+                    count_up( id, better_dc_counter.min_val[id], better_dc_counter.cur_val[id] );
 
-                    if( better_dc.width[id] == 1 ) {
+                    if( better_dc_counter.width[id] == 1 ) {
                         $( '#' + id ).find( '#counter-fill-wrap.animated' )
-                            .animate( { width: better_dc.height[id] }, 5000 ); 
+                            .animate( { width: better_dc_counter.height[id] }, 5000 ); 
                     } else {
                         $( '#' + id ).find( '#counter-fill-wrap.animated' )
-                            .animate( { height: better_dc.height[id] }, 5000 ); 
+                            .animate( { height: better_dc_counter.height[id] }, 5000 ); 
                     }
             }
         }        
@@ -94,10 +93,9 @@ jQuery( function ( $ ) {
                     } else {
                         current_val = max_val;
                     }
-                    if( better_dc.only_numeric[id] == 0 ) {
+                    if( better_dc_counter.only_numeric[id] == 0 ) {
                         $( '#' + id ).find( 'span.counter-value').text(current_val);
                     } else {
-                        console.log('span#' + id + '.counter-value-only');
                         $( 'span#' + id + '.counter-value-only').text(current_val);
                     }
                 }

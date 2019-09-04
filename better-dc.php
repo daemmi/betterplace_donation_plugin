@@ -85,7 +85,9 @@ if ( is_admin() ) {
 function BETTER_DC_enqueue() {
     
 	/* register scripts */ 
-	wp_register_script( 'better-dc-counter', BETTER_DC_RELPATH . 'js/better-dc-counter.js', array( 'jquery' ), '1.1.2.3633', true );
+	wp_register_script( 'better-dc-counter', BETTER_DC_RELPATH . 'js/better-dc-counter.js', array( 'jquery' ), '1.0.0', true );
+	wp_register_script( 'better-dc-button', BETTER_DC_RELPATH . 'js/better-dc-button.js', array( 'jquery' ), '1.0.0', true );
+	wp_register_script( 'better-dc-redirect', BETTER_DC_RELPATH . 'js/better-dc-redirect.js', array( 'jquery' ), '1.0.0', true );
 	    
 	/* register styles */
 	wp_register_style( 'better-dc-counter', BETTER_DC_RELPATH . 'css/better-dc-counter.css', false, '1.0.0' );

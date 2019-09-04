@@ -62,7 +62,6 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
                 }
 
                 // JSON-Parsing
-
                 $json_decoder = json_decode($datei);
                 $donations = $json_decoder->donated_amount_in_cents / 100;
             }
@@ -141,10 +140,116 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
         public function donation_button( $atts = '' ) {
     
             extract( shortcode_atts( array(
-                
+                'client_id'             => null,
+                'project_id'            => null,
+                'button_id'             => null,
+                'donation_client_ref'   => null,
             ), $atts ) );
+            
+            $error = 0;
+            $error_text = '';
+            if( $button_id == null ) {
+                $error_text .= "No Button ID! (button_id='') <br>";
+                $error = 1;
+            } 
+            if ( $client_id == null ) {
+                $error_text .= "No client id! (client_id='') <br>";
+                $error = 1;
+            } 
+            if ( $project_id == null ) {
+                $error_text .= "No project id! (project_id='') <br>";
+                $error = 1;
+            } 
+            if ( $donation_client_ref == null ) {
+                $error_text .= "No donation client reference! (donation_client_ref='') <br>";
+                $error = 1;
+            }
+            if ( $error != 0 ) {
+                return $error_text;
+            }
+            
+            //check if in button id is a - char, it will break with this 
+            if ( strpos( $button_id, '-' ) !== false ) {
+                return "There is a '-' in your button id! Please use an id without any '-' chars!";
+            }
+                        
+            //create the redirect link
+            $final_donation_client_ref = '&donation_client_reference=' . $donation_client_ref . '_' . uniqid();
+            $redirect_link = 'https://www.betterplace.org/de/projects/' . $project_id . '/client_donations/new?client_id=' . $client_id . $final_donation_client_ref;
+            
+            $button_params = array(
+                'redirect_link' => $redirect_link,
+                'button_id' => $button_id,
+            );
 
-            return $output;
+            wp_enqueue_script( 'better-dc-button' );
+            wp_localize_script( 'better-dc-button', 'button_params' . $button_id, $button_params );
+
+            return ;
+       }  
+
+        /**
+        * Shortcode handler for
+        * donation redirect handling
+        *
+        * @since 1.0
+        * @access public
+        */
+        public function donation_redirect_handling( $atts = '' ) {
+    
+            extract( shortcode_atts( array(
+                'donation_client_ref'   => null,
+                'redirect_link'         => null,   
+                'debug'                 => 0,
+            ), $atts ) );
+            
+            $error = 0;
+            $error_text = '';
+            if( $donation_client_ref == null ) {
+                $error_text .= "No donation client reference! (donation_client_ref='test1, test2') <br>";
+                $error = 1;
+            } 
+            if ( $redirect_link == null ) {
+                $error_text .= "No redirect link! (client_id='link1, link2') <br>";
+                $error = 1;
+            } 
+            if ( $error != 0 ) {
+                return $error_text;
+            }
+            
+            // Create our array of values
+            // First, sanitize the data and remove white spaces
+            $no_whitespaces = preg_replace( '/\s*,\s*/', ',', filter_var( $donation_client_ref, FILTER_SANITIZE_STRING ) ); 
+            $donation_client_ref_array = explode( ',', $no_whitespaces );
+            $no_whitespaces = preg_replace( '/\s*,\s*/', ',', filter_var( $redirect_link, FILTER_SANITIZE_STRING ) ); 
+            $redirect_link_array = explode( ',', $no_whitespaces );
+            
+            if( isset( $_GET['status'] ) && isset( $_GET['donation_client_reference'] ) && 
+                    isset( $_GET['amount'] ) && isset( $_GET['donation_token'] ) && 
+                    ( $_GET['status'] == 'DONATION_COMPLETE' ) ){
+                
+                $donation_client_reference = $_GET['donation_client_reference'];
+                $amount = $_GET['amount'];
+                $donation_token = $_GET['donation_token'];
+                
+                $donation_client_reference_teile = explode("_", $donation_client_reference);
+                $donation_client_reference = $donation_client_reference_teile[0];
+                
+                if ( !in_array( $donation_client_reference, $donation_client_ref_array ) ) {
+                    return "There was a technical issue!";
+                }
+                
+                $key = array_search( $donation_client_reference, $donation_client_ref_array );
+                $redirect = $redirect_link_array[$key];
+                
+                wp_enqueue_script( 'better-dc-redirect' );
+                wp_localize_script('better-dc-redirect', 'app_vars', array(
+                        'url' => $redirect
+                        )
+                );
+            }
+
+            return ;
        }  
 
         /**
@@ -156,6 +261,7 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
         public function __construct() {
             add_shortcode( 'better-dc-donation-counter', array( &$this, 'donation_counter' ) );
             add_shortcode( 'better-dc-donation-button', array( &$this, 'donation_button' ) );
+            add_shortcode( 'better-dc-donation-redirect-handling', array( &$this, 'donation_redirect_handling' ) );
         }
 
     } // class
