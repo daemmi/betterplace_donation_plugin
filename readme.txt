@@ -62,7 +62,7 @@ shortcodes:
         2. 0 - no content
 
     - only_numeric - [0] (bool)
-        1. 1 - shows only the donation amount and counts up
+        1. 1 - shows only the donation amount and counts up this up
         2. 0 - normal animation
 
 == Installation ==

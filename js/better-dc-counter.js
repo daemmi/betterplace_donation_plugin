@@ -8,6 +8,7 @@ better_dc = {
     index: {},
     width: {},
     runed: {},
+    only_numeric: {},
 }
 
 jQuery( function ( $ ) {
@@ -20,6 +21,7 @@ jQuery( function ( $ ) {
         better_dc.min_val[id] = window["counter_params" + id].min;
         better_dc.cur_val[id] = window["counter_params" + id].current; 
         better_dc.width[id] = window["counter_params" + id].width; 
+        better_dc.only_numeric[id] = window["counter_params" + id].only_numeric; 
         better_dc.index[id] = index; 
         better_dc.runed[id] = 0;
         
@@ -92,7 +94,12 @@ jQuery( function ( $ ) {
                     } else {
                         current_val = max_val;
                     }
-                    $( '#' + id ).find( 'span.counter-value').text(current_val);
+                    if( better_dc.only_numeric[id] == 0 ) {
+                        $( '#' + id ).find( 'span.counter-value').text(current_val);
+                    } else {
+                        console.log('span#' + id + '.counter-value-only');
+                        $( 'span#' + id + '.counter-value-only').text(current_val);
+                    }
                 }
             },
             50

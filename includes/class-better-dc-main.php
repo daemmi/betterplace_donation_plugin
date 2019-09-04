@@ -78,11 +78,12 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
             $current = $donations;
             $current = $current + $offset;
             $counter_params = array(
-                 'min' => $min,
-                 'current' => $current,
-                 'max' => $max,
-                 'height' => $height,
-                 'width' => $width
+                'min' => $min,
+                'current' => $current,
+                'max' => $max,
+                'height' => $height,
+                'width' => $width,
+                'only_numeric' => $only_numeric,
             );
 
             wp_enqueue_script( 'better-dc-counter' );
@@ -121,7 +122,8 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
                                 $output .= '</div>' .
                             '</div>';
             } else {
-                $output =   '<div class="counter-wrap" id="' . $id . '"> <span class="counter-value">' . $min . '</span> </div>';
+                $output =   ' <span id="' . $id . '" class="counter-value-only counter-wrap">' . $min . '</span> ';
+//                $output =   '<div class="counter-wrap only-numeric-wrap" id="' . $id . '"> <span class="counter-value">' . $min . '</span> </div>';
             }
 
             return $output;
