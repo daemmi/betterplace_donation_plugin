@@ -37,6 +37,8 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
                 'image' => 1,
                 'content' => 1,
                 'only_numeric' => 0,
+                'static_img_link' => BETTER_DC_RELPATH . 'img/counter-bg.png',
+                'animated_img_link' => BETTER_DC_RELPATH . 'img/counter-fill.png',
             ), $atts ) );
 
             if( $project_id != null ) {
@@ -100,7 +102,7 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
                                 }
                                 $output .= '">';
                                     if ( 1 == $image ) {
-                                        $output .=  '<img id="counter-bg" alt="Donation Counter" src="' . BETTER_DC_RELPATH . 'img/counter-bg.png" />';
+                                        $output .=  '<img id="counter-bg" alt="Donation Counter" src="' . $static_img_link . '" />';
                                     }
                                     $output .= '<div id="counter-fill-wrap"';
                                     if ( 1 == $animation ) {
@@ -110,7 +112,7 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
                                     }
                                     $output .= $scale_content_class . '">';
                                     if ( 1 == $image ) {
-                                        $output .= '<img id="counter-fill" alt="Donation Counter" src="' . BETTER_DC_RELPATH . 'img/counter-fill.png" />';
+                                        $output .= '<img id="counter-fill" alt="Donation Counter" src="' . $animated_img_link . '" />';
                                     }
                                     $output .= '</div>';
                                     if ( 1 == $content ) {
@@ -130,6 +132,22 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
        }  
 
         /**
+        * Shortcode handler for
+        * donation button
+        *
+        * @since 1.0
+        * @access public
+        */
+        public function donation_button( $atts = '' ) {
+    
+            extract( shortcode_atts( array(
+                
+            ), $atts ) );
+
+            return $output;
+       }  
+
+        /**
          * PHP5 style constructor
          *
          * @since 1.0
@@ -137,6 +155,7 @@ if ( ! class_exists( 'BETTER_DC' ) ) :
          */
         public function __construct() {
             add_shortcode( 'better-dc-donation-counter', array( &$this, 'donation_counter' ) );
+            add_shortcode( 'better-dc-donation-button', array( &$this, 'donation_button' ) );
         }
 
     } // class

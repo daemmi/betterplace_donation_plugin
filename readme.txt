@@ -65,6 +65,12 @@ shortcodes:
         1. 1 - shows only the donation amount and counts up this up
         2. 0 - normal animation
 
+    - static_img_link - [path to plugin image] (string)
+        full path to a other image 
+
+    - animated_img_link - [path to plugin image] (string)
+        full path to a other image 
+
 == Installation ==
 
 This section describes how to install and use the plugin.
